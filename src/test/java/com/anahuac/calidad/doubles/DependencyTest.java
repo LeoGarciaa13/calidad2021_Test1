@@ -73,7 +73,8 @@ public class DependencyTest {
 	public void mockReal_Test(){
 		// Set the behavior of the instance
 		when(dependency.getClassName()).thenCallRealMethod();
-		// Exercise the test of mock			assertThat(dependency.getClassName(),is(dependency.getClass().getSimpleName()));
+		// Exercise the test of mock			
+		assertThat(dependency.getClassName(),is(dependency.getClass().getSimpleName()));
 			
 	}
 	
