@@ -18,27 +18,29 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class CreateAccountTest {
 	private String arg1;		//Value 1 (holder) 
-	private int arg2;			//Value 2 (balance)
+	private int arg2;			//Value 2 (initial balance)
 	private int arg3;			//Value 3 (zone)
-	//private String arg4;		//Expected value (holder)
-	//private int arg5;			//Expected value (balance)
+	private int arg4;			//Value 4 (due)
+	private int arg5;			//Expected value (balance)
 	//private int arg6;			//Expected value (zone)
 	private cuenta miCuenta; //Object
 	
 	// Set arguments to test
-	public CreateAccountTest(String arg1, int arg2, int arg3){
+	public CreateAccountTest(String arg1, int arg2, int arg3, int arg5, int arg6){
 		this.arg1 = arg1;
 		this.arg2 = arg2;
-		this.arg3 = arg3; 
+		this.arg3 = arg3;
+		this.arg4 = arg5;
+		this.arg5 = arg6;
 	}
 	
 	// Set parameters to test
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][]{
-			{"Cuenta de Juan", 200,1},				// Zone 1
-			{"Cuenta de Maria", 500, 2},			// Zone 2
-			{"Cuenta de Ignacio", 1850, 3},	// Zone 3
+			{"Cuenta de Juan", 200,1,75, 125},				// Zone 1
+			{"Cuenta de Maria", 500, 2, 250, 250},			// Zone 2
+			{"Cuenta de Ignacio", 1850, 3, 50, 1800},		// Zone 3
 			}); 
 	}
 
@@ -53,7 +55,7 @@ public class CreateAccountTest {
 	}
 
 	@Test
-	public void test() {
+	public void Account_test() {
 		// Using HamCrest 		
 		// Exercise code to run and test
 		//
@@ -70,6 +72,28 @@ public class CreateAccountTest {
 		assertThat(this.arg1, is(resHolder));
 		assertThat(this.arg2, is(resBalance)); 
 		assertThat(this.arg3, is(resZone)); 
+	}
+	
+	@Test
+	public void AccountCredit_test() {
+		// Using HamCrest 		
+		// Exercise code to run and test
+		//
+		miCuenta.setHolder(this.arg1);
+		String resHolder = miCuenta.getHolder(); 
+		//
+		miCuenta.setBalance(this.arg2);
+		int resBalance = miCuenta.getBalance(); 
+		//
+		miCuenta.setZone(this.arg3);
+		int resZone = miCuenta.getZone(); 
+		//
+		miCuenta.debit(this.arg4);
+		int Debit = miCuenta.getBalance(); 
+						
+		// Verify
+		assertThat(this.arg5, is(Debit));
+		
 	}
 
 }
