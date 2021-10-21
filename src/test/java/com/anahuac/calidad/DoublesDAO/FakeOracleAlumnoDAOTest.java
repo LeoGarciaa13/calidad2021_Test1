@@ -151,11 +151,11 @@ public class FakeOracleAlumnoDAOTest {
 			}
 		);
 		// Call the method and add one student
-		DAO.searchAlumno("001");
-		assertThat(alumno1.getId(), is(alumno1.getId()));
-		assertThat(alumno1.getEdad(), is(alumno1.getEdad()));
-		assertThat(alumno1.getNombre(), is(alumno1.getNombre()));
-		assertThat(alumno1.getEmail(), is(alumno1.getEmail()));
+		Alumno alumnoRes = DAO.searchAlumno("001");
+		assertThat(alumno1.getId(), is(alumnoRes.getId()));
+		assertThat(alumno1.getEdad(), is(alumnoRes.getEdad()));
+		assertThat(alumno1.getNombre(), is(alumnoRes.getNombre()));
+		assertThat(alumno1.getEmail(), is(alumnoRes.getEmail()));
 		System.out.println("Alumno encontrado"+ "\n"); 
 	}
 
