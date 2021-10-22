@@ -36,7 +36,7 @@ public class FakeOracleAlumnoDAOTest {
 		DAO = Mockito.mock(FakeOracleAlumnoDAO.class);
 		alumnos = new HashMap <String, Alumno>();
 		// Declare the object with parameters
-		alumno1 = new Alumno("nombre", "001", 23, "micorreo2@hola.com"); 
+		alumno1 = new Alumno("001","nombre", "micorreo2@hola.com", 23); 
 		
 	}
 

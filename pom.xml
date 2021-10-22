@@ -38,6 +38,13 @@
  		<artifactId>mockito-core</artifactId>
   		<version>3.12.4</version>
 	</dependency> 
+	<!-- https://search.maven.org/artifact/mysql/mockito-connector-java/8.0.27/jar -->
+	<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    <version>8.0.27</version>
+</dependency>
+	
   </dependencies>
 
   <build>
