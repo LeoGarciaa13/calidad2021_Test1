@@ -7,10 +7,6 @@ public class cuenta {
     int zone; 
     alertListener alerts;
 
-    public cuenta(alertListener alerts){ 
-        this.alerts = alerts;
-    }
-    
     public cuenta() {
 		// TODO Auto-generated constructor stub
 	}
@@ -26,6 +22,10 @@ public class cuenta {
     
     public void setBalance(int balance) {
     	this.balance = balance; 
+    }
+    
+    public void setAlerts(alertListener listener) {
+    	this.alerts = listener; 
     }
     
     // Getters
@@ -57,8 +57,5 @@ public class cuenta {
         this.balance += balance;
     }
     
-    void setAlertListener(alertListener listener){
-        this.alerts = listener;
-    }
     
 }
