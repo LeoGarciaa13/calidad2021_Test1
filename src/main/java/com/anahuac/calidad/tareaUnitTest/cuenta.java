@@ -36,9 +36,7 @@ public class cuenta {
     public int getZone() {
     	if(this.zone == 1 || this.zone == 2 || this.zone == 3 ) {
     		return this.zone;
-    	}else {
-    		return 0;
-    	}
+    	}else {return 0;}
     }
     
     public String getHolder(){
@@ -51,6 +49,18 @@ public class cuenta {
         if(this.balance < 100){
             this.alerts.sendAlert(this.holder+", your account balance is below 100");
         }
+    }
+    
+    public int abono(int abono) {
+    	return this.balance + abono; 
+    }
+    
+    public int consultarComisiones(){
+    	return this.balance; 
+    }
+    
+    public int getPorcentaje() {
+    	return (1+ (this.zone/100)); 
     }
 
     void credit(int balance) {
