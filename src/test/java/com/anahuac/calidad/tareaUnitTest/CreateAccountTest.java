@@ -26,12 +26,12 @@ public class CreateAccountTest {
 	private cuenta miCuenta; //Object
 	
 	// Set arguments to test
-	public CreateAccountTest(String arg1, int arg2, int arg3, int arg5, int arg6){
+	public CreateAccountTest(String arg1, int arg2, int arg3, int arg4, int arg5){
 		this.arg1 = arg1;
 		this.arg2 = arg2;
 		this.arg3 = arg3;
-		this.arg4 = arg5;
-		this.arg5 = arg6;
+		this.arg4 = arg4;
+		this.arg5 = arg5;
 	}
 	
 	// Set parameters to test
@@ -80,17 +80,13 @@ public class CreateAccountTest {
 		// Exercise code to run and test
 		//
 		miCuenta.setHolder(this.arg1);
-		String resHolder = miCuenta.getHolder(); 
 		//
-		miCuenta.setBalance(this.arg2);
-		int resBalance = miCuenta.getBalance(); 
+		miCuenta.setBalance(this.arg2); 
 		//
 		miCuenta.setZone(this.arg3);
-		int resZone = miCuenta.getZone(); 
 		//
 		miCuenta.debit(this.arg4);
-		int Debit = miCuenta.getBalance(); 
-						
+		int Debit = miCuenta.getBalance(); 				
 		// Verify
 		assertThat(this.arg5, is(Debit));
 		
