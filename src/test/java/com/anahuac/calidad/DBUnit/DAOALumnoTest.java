@@ -4,13 +4,15 @@ import static org.junit.Assert.*;
 // FIle Imports
 import java.io.File;
 
-import org.dbunit.Assertion;
 // DB Unit test imports
+import org.dbunit.Assertion;
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.FilteredTableMetaData;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.RowFilterTable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 // Test Imports
@@ -21,6 +23,10 @@ import org.junit.Test;
 import com.anahuac.calidad.DoublesDAO.Alumno;
 
 public class DAOALumnoTest extends DBTestCase{
+	
+	String nuevoCorreo = "hola003@gmail.com"; 
+	// Declare DAO
+	private AlumnoDAOMySQL daoMySql; 
 	
 	public DAOALumnoTest() {
 		System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS,"com.mysql.cj.jdbc.Driver");
@@ -37,6 +43,9 @@ public class DAOALumnoTest extends DBTestCase{
 	
 	@Before
 	public void setUp() throws Exception {
+		// Initialize DAO
+		daoMySql = new AlumnoDAOMySQL(); 
+		// Set the initial condition of the database
 		IDatabaseConnection connection = getConnection(); 
 		try {
 			DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
@@ -50,11 +59,13 @@ public class DAOALumnoTest extends DBTestCase{
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
+	/*
+	 *  Test for adding student method
+	 */
 	@Test
-	public void test() {
+	public void testAddAlumno() {
 		Alumno alumno = new Alumno("004", "alumno004", "hola4@hola.com", 18);
-		AlumnoDAOMySQL daoMySql = new AlumnoDAOMySQL(); 
 		
 		daoMySql.addAlumno(alumno);
 		
@@ -74,7 +85,99 @@ public class DAOALumnoTest extends DBTestCase{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			fail("Error in insert ttest: " + e.getMessage());
+			fail("Error in insert test: " + e.getMessage());
+		}	
+	}
+	 
+	
+	/*
+	 *  Test for deleting the fields of an student method
+	 */
+	@Test
+	public void testDeleteAlumno() {
+		Alumno alumno = new Alumno("003", "alumno003", "hola3@hola.com", 17);
+		
+		daoMySql.deleteAlumno(alumno);
+		
+		// Verify data in database
+		try {
+			// This is the full database
+			IDataSet databaseDataSet = getConnection().createDataSet(); 
+			
+			ITable actualTable = databaseDataSet.getTable("alumnos_tbl");
+			
+			// Read XML with the expected result
+			IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(new File("src/resources/delete_result.xml"));
+			ITable expectedTable = expectedDataSet.getTable("alumnos_tbl");
+			
+			Assertion.assertEquals(expectedTable, actualTable);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			fail("Error in insert test: " + e.getMessage());
+		}	
+	} 
+	
+	
+	/*
+	 *  Test for updating the email field method
+	 */
+	@Test
+	public void testUpdateEmail() {
+		Alumno alumno = new Alumno("003", "alumno003", "hola3@hola.com", 17);
+		
+		// Set the change in the email field
+		alumno.setEmail(nuevoCorreo);
+		// call update method
+		daoMySql.updateEmail(alumno);
+		
+		// Verify data in database
+		try {
+			// This is the full database
+			IDataSet databaseDataSet = getConnection().createDataSet(); 
+			
+			ITable actualTable = databaseDataSet.getTable("alumnos_tbl");
+			
+			// Read XML with the expected result
+			IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(new File("src/resources/update_result.xml"));
+			ITable expectedTable = expectedDataSet.getTable("alumnos_tbl");
+			
+			Assertion.assertEquals(expectedTable, actualTable);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			fail("Error in insert test: " + e.getMessage());
+		}	
+	} 
+	
+	/*
+	 *  Test for searching an specific student method
+	 */
+	
+	@Test
+	public void testSearchAlumno() {
+		// call search method
+		Alumno retrivied = daoMySql.searchAlumno("003");
+		
+		// Verify data in database
+		try {
+			// This is the full database
+			IDataSet databaseDataSet = getConnection().createDataSet(); 
+			
+			ITable actualTable = databaseDataSet.getTable("alumnos_tbl");
+			
+			// Read XML with the expected result
+			IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(new File("src/resources/select_result.xml"));
+			ITable expectedTable = expectedDataSet.getTable("alumnos_tbl");
+			
+			Assertion.assertEquals(expectedTable, actualTable);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			fail("Error in insert test: " + e.getMessage());
 		}	
 	}
 }

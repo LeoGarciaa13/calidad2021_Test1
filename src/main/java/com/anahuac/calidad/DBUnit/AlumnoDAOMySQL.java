@@ -66,7 +66,7 @@ public class AlumnoDAOMySQL {
 		// Set the values to match in the ? on query
 		preparedStatement.setString(1, a.getId()); 
 					
-		// Return the result of connection nad statement
+		// Return the result of connection and statement
 		if(preparedStatement.executeUpdate()>=1) {
 			result = true; 
 		}
@@ -90,10 +90,11 @@ public class AlumnoDAOMySQL {
 		// Declare statement query to run 
 		PreparedStatement preparedStatement; 
 		preparedStatement = connection.prepareStatement(
-							"UPDATE alumnos_tbl set email = ? WHERE id = ?");
+							"UPDATE alumnos_tbl SET email = ? WHERE id = ?");
 		// Set the values to match in the ? on query
-		preparedStatement.setString(1, a.getId()); 
-		preparedStatement.setString(3, a.getEmail());
+		preparedStatement.setString(1, a.getEmail());
+		preparedStatement.setString(2, a.getId()); 
+		
 					
 		// Return the result of connection and statement
 		if(preparedStatement.executeUpdate()>=1) {
