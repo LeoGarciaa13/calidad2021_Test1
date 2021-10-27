@@ -60,11 +60,12 @@ public class DAOALumnoTest extends DBTestCase{
 		
 		// Verify data in database
 		try {
-			IDataSet databaseDataSet = getConnection().createDataSet(); //esta es toda la base de datos
+			// This is the full database
+			IDataSet databaseDataSet = getConnection().createDataSet(); 
 			
 			ITable actualTable = databaseDataSet.getTable("alumnos_tbl");
 			
-			//Leer el archivo con el resultado esperado
+			// Read XML with the expected result
 			IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(new File("src/resources/insert_result.xml"));
 			ITable expectedTable = expectedDataSet.getTable("alumnos_tbl");
 			
