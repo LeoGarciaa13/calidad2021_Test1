@@ -45,7 +45,7 @@ public class GoogleTest {
 	 public void testBusqueda() throws Exception {
 	    driver.get("https://www.google.com/search?q=covid+2021&rlz=1C1GCEU_esMX967MX967&oq=covid+2021&aqs=chrome.0.69i59j0i512l9.3982j0j15&sourceid=chrome&ie=UTF-8");
 	    driver.findElement(By.xpath("//div[@id='kp-wp-tab-overview']/div[7]/div/div[2]/div/div/div/div/div/div/div/div/a/h3")).click();
-	    assertEquals("Coronavirus – gob.mx", driver.getTitle());
+	    assertThat("Coronavirus – gob.mx", is(driver.getTitle()));
 	 }
 
 	 private boolean isElementPresent(By by) {
