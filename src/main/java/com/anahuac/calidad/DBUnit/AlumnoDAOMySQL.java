@@ -42,7 +42,9 @@ public class AlumnoDAOMySQL {
 		if(preparedStatement.executeUpdate()>=1) {
 			result = true; 
 		}
-		System.out.println(">> Return: " + result);			
+		System.out.println("\n");
+		System.out.println("Alumno añadido con exito");
+		System.out.println(">> Return: " + result +"\n");			
 		// Close connection with the database
 		connection.close();
 		preparedStatement.close(); 
@@ -70,7 +72,9 @@ public class AlumnoDAOMySQL {
 		if(preparedStatement.executeUpdate()>=1) {
 			result = true; 
 		}
-		System.out.println(">> Return: " + result);			
+		System.out.println("\n");
+		System.out.println("Alumno eliminado con exito");
+		System.out.println(">> Return: " + result +"\n");			
 		// Close connection with the database
 		connection.close();
 		preparedStatement.close(); 
@@ -100,7 +104,9 @@ public class AlumnoDAOMySQL {
 		if(preparedStatement.executeUpdate()>=1) {
 			result = true; 
 		}
-		System.out.println(">> Return: " + result);			
+		System.out.println("\n");
+		System.out.println("Correo de alumno con ID: " + a.getId() + " actualizado");
+		System.out.println(">> Return: " + result +"\n");			
 		// Close connection with the database
 		connection.close();
 		preparedStatement.close(); 
@@ -115,7 +121,8 @@ public class AlumnoDAOMySQL {
 	public Alumno searchAlumno(String id) {
 		Connection connection = getConnectionMySQL();
 		PreparedStatement preparedStatement; 
-		ResultSet rs; 
+		ResultSet rs;
+		boolean result = false;
 		
 		Alumno retrieved = null; 
 		
@@ -135,8 +142,15 @@ public class AlumnoDAOMySQL {
 		String retrivedEmail = rs.getString(3);
 		int retrivedAge = rs.getInt(4);
 		
-		retrieved = new Alumno(retrivedId,retrivedName,retrivedEmail, retrivedAge);	
-				
+		retrieved = new Alumno(retrivedId,retrivedName,retrivedEmail, retrivedAge);
+		
+		// Return the values of the search
+		System.out.println("\n");
+		System.out.println("---Alumno---");
+		System.out.println("ID: " + retrieved.getId());
+		System.out.println("Nombre: " + retrieved.getNombre());
+		System.out.println("Edad: " + retrieved.getEdad());
+		System.out.println("Email: " + retrieved.getEmail() + "\n");
 		// Close connection with the database
 		connection.close();
 		rs.close();

@@ -9,6 +9,7 @@ import org.dbunit.Assertion;
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.FilteredTableMetaData;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
@@ -63,6 +64,7 @@ public class DAOALumnoTest extends DBTestCase{
 	/*
 	 *  Test for adding student method
 	 */
+	
 	@Test
 	public void testAddAlumno() {
 		Alumno alumno = new Alumno("004", "alumno004", "hola4@hola.com", 18);
@@ -93,6 +95,7 @@ public class DAOALumnoTest extends DBTestCase{
 	/*
 	 *  Test for deleting the fields of an student method
 	 */
+	
 	@Test
 	public void testDeleteAlumno() {
 		Alumno alumno = new Alumno("003", "alumno003", "hola3@hola.com", 17);
@@ -123,6 +126,7 @@ public class DAOALumnoTest extends DBTestCase{
 	/*
 	 *  Test for updating the email field method
 	 */
+	
 	@Test
 	public void testUpdateEmail() {
 		Alumno alumno = new Alumno("003", "alumno003", "hola3@hola.com", 17);
@@ -160,19 +164,23 @@ public class DAOALumnoTest extends DBTestCase{
 	public void testSearchAlumno() {
 		// call search method
 		Alumno retrivied = daoMySql.searchAlumno("003");
-		
+		String query = "SELECT * FROM alumnos_tbl WHERE id = \"003\""; 
 		// Verify data in database
 		try {
 			// This is the full database
 			IDataSet databaseDataSet = getConnection().createDataSet(); 
 			
-			ITable actualTable = databaseDataSet.getTable("alumnos_tbl");
+			// Generate a temporal table with the select query only 
+			QueryDataSet actualTable = new QueryDataSet(getConnection());
+			actualTable.addTable("alumnosTemp_tbl", query);
 			
 			// Read XML with the expected result
 			IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(new File("src/resources/select_result.xml"));
 			ITable expectedTable = expectedDataSet.getTable("alumnos_tbl");
 			
-			Assertion.assertEquals(expectedTable, actualTable);
+			// Verify 
+			//System.out.print(actualTable.getTable("alumnosTemp_tbl").getValue(0, "nombre")); 
+			Assertion.assertEquals(expectedTable, actualTable.getTable("alumnosTemp_tbl"));
 			
 			
 		} catch (Exception e) {
